@@ -3,18 +3,6 @@ import json
 from tld import get_tld
 from grab import grab_outside
 
-def get_tld_map():
-  rdap_api_endpoints = requests.get(url='https://data.iana.org/rdap/dns.json').json()['services']
-  print("TLD API MAP OBTAINED")
-  return rdap_api_endpoints
-
-TLD_API_MAP = get_tld_map()
-
-def find_api_endpoint(tld):
-  for x in TLD_API_MAP:
-    if tld in x[0]: return x[1][0]
-    elif tld == 'de': return 'https://rdap.denic.de/'
-
 def rdap(url):
   pass
 
@@ -32,8 +20,8 @@ for instance in grabbed:
     # 'co.uk'
     res.fld
     # 'google.co.uk'
-
-    api_endpoint = find_api_endpoint(res.tld.encode('idna').decode())
+    
+    api_endpoint = f'https://www.rdap.net/domain/{res.fld}'
     print(f'{api_endpoint}domain/{res.fld}')
 
     """
