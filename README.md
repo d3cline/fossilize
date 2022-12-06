@@ -25,3 +25,4 @@ AI libraries like pytorch can provide content moderation assistance.
 - Determine how user based scoring might work. 
 - Use Mastodon.py to interface with mastodon API. 
 
+## This code is experimental and in constant change. 
