@@ -19,6 +19,7 @@ AI libraries like pytorch can provide content moderation assistance.
 - Build functions for determining 'RDAP Score'
 - Build functions to obtain user data from a given instance.
 - Build functions to send user data into pytorch and perform some tasks such as emotion score.
+  - EmoRoBERTa
 - Determine how we want to store the data. Django, FastAPI, SQLite. (I know django really well, but I dont really feel its right for this)
 - Determine how we set automatic tasks based on scores. 
 - Determine how we want to notify the admin.
