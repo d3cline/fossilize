@@ -10,26 +10,13 @@ for instance in grabbed:
   try: res = get_tld(domain, as_object=True, fix_protocol=True)
   except: res = None
   if res:
-    res.subdomain
-    # 'some.subdomain'
-    res.domain
-    # 'google'
-    res.tld
-    # 'co.uk'
-    res.fld
-    # 'google.co.uk'
-    
     api_endpoint = f'https://www.rdap.net/domain/{res.fld}'
-    rdap = requests.get(url=api_endpoint)
-    if rdap.status_code == 200: pprint(rdap.json())
-
-    """
-    rdap_info = rdap(res.fld)
-    f = open(f'rdaps/{res.fld}.json', "w")
-    f.write(json.dumps(rdap_info))
-    f.close()
-    print(f"ADDED {instance['domain']}")
-    """
-
+    try: rdap = requests.get(url=api_endpoint, timeout=3)
+    except: print(f"TIMEOUT {domain}")
+    if rdap.status_code == 200: 
+      f = open(f'rdaps/{res.fld}.json', "w")
+      f.write(json.dumps(rdap.json()))
+      f.close()
+      print(f"ADDED {domain}")
   else:
-    print(f"FAILED {instance['domain']}")
+    print(f"FAILED {domain}")
