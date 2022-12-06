@@ -22,7 +22,7 @@ for instance in grabbed:
     # 'google.co.uk'
     
     api_endpoint = f'https://www.rdap.net/domain/{res.fld}'
-    print(f'{api_endpoint}domain/{res.fld}')
+    print(api_endpoint)
 
     """
     rdap_info = rdap(res.fld)
