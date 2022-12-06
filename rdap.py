@@ -2,9 +2,7 @@ import requests
 import json 
 from tld import get_tld
 from grab import grab_outside
-
-def rdap(url):
-  pass
+from pprint import pprint
 
 grabbed = grab_outside()
 for instance in grabbed:
@@ -22,7 +20,8 @@ for instance in grabbed:
     # 'google.co.uk'
     
     api_endpoint = f'https://www.rdap.net/domain/{res.fld}'
-    print(api_endpoint)
+    rdap = requests.get(url=api_endpoint)
+    if rdap.status_code == 200: pprint(rdap.json())
 
     """
     rdap_info = rdap(res.fld)
