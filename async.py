@@ -1,20 +1,26 @@
 import aiohttp
 import asyncio
 from grab import grab_inside
+from tld import get_tld
 
 async def fetch(session, url):
-    async with session.get(url) as response:
-        return await response.text()
+    try:
+        async with session.get(url) as response:
+            return await response.json()
+    except:
+        return None
 
 async def main():
     urls = grab_inside()
     tasks = []
     async with aiohttp.ClientSession() as session:
         for url in urls:
-            tasks.append(fetch(session, f'https://{url}'))
-        htmls = await asyncio.gather(*tasks)
-        for html in htmls:
-            print(html[:100])
+            try: res = get_tld(url, as_object=True, fix_protocol=True)
+            except: res = None
+            if res: tasks.append(fetch(session, f'https://www.rdap.net/domain/{res.fld}'))
+        bodies = await asyncio.gather(*tasks)
+        for body in bodies:
+            if body: print(body)
 
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
@@ -23,3 +29,6 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
+
+
+# Change endpoint to RDAP api and not mastodon instance, this is supposed to be getting the RDAP
