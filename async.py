@@ -2,10 +2,13 @@ import aiohttp
 import asyncio
 from grab import grab_inside
 from tld import get_tld
+from storage import put_object
+import json 
 
 async def fetch(session, url):
     try:
         async with session.get(url) as response:
+            print(url)
             return await response.json()
     except:
         return None
@@ -20,7 +23,10 @@ async def main():
             if res: tasks.append(fetch(session, f'https://www.rdap.net/domain/{res.fld}'))
         bodies = await asyncio.gather(*tasks)
         for body in bodies:
-            if body: print(body)
+            if body and "ldhName" in body.keys():
+                put_object(f'rdap/{body["ldhName"].lower()}', json.dumps(body))
+            else:
+                print(body)
 
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
