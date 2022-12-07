@@ -29,6 +29,3 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
-
-
-# Change endpoint to RDAP api and not mastodon instance, this is supposed to be getting the RDAP
