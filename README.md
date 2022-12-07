@@ -13,6 +13,8 @@ Lists of peers are provided by Mastodon itself as well as projects like `podupti
 Domain information can be polled from RDAP, as well as email abuse APIs.
 AI libraries like pytorch can provide content moderation assistance.
 
+![description](https://raw.githubusercontent.com/d3cline/fossilize/main/concept.png)
+
 # Tasks
 - Build functions for obtaining the domain from mastodon and poduptime.
 - Build functions for obtaining information from RDAP databases.
