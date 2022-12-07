@@ -1,5 +1,6 @@
 import requests
-from config import PODUP_API_URL, INSTANCE_URL
+from settings import PODUP_API_URL, INSTANCE_URL
+
 podurl = PODUP_API_URL
 body = """
 query{
