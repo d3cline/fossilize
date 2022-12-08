@@ -3,14 +3,14 @@ import asyncio
 from grab import grab_inside
 from tld import get_tld
 from storage import put_object
-import json 
+import json
 
 async def fetch(session, url):
     try:
         async with session.get(url) as response:
-            return await response.json()
-    except:
-        return {"error": f"{url} failed rdap lookup"}
+            return await response.json(content_type=None)
+    except Exception as ex:
+        return {"error": f"{url} failed rdap lookup", "exception": str(ex)}
 
 async def main():
     urls = grab_inside()
