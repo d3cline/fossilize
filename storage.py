@@ -17,4 +17,7 @@ def put_object(path, data):
     print(f'Put: {path}')
 
 def list_rdap():
-    return client.list_objects("fossilize", prefix="rdap/")
+    cached_rdaps = []
+    for obj in client.list_objects("fossilize", prefix="rdap/"):
+        cached_rdaps.append(obj.object_name.split('/')[1])
+    return cached_rdaps
