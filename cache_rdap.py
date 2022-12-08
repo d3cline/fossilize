@@ -15,7 +15,8 @@ async def fetch(session, url):
 async def main():
     urls = grab_inside()
     tasks = []
-    async with aiohttp.ClientSession() as session:
+    conn = aiohttp.TCPConnector(limit=30)
+    async with aiohttp.ClientSession(connector=conn) as session:
         for url in urls:
             try: res = get_tld(url, as_object=True, fix_protocol=True)
             except: res = {"error": f"{url} failed tld lookup"}
