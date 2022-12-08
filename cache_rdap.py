@@ -2,20 +2,33 @@ import aiohttp
 import asyncio
 from grab import grab_inside
 from tld import get_tld
-from storage import put_object
+from storage import put_object, list_rdap
 import json
 
 async def fetch(session, url):
     try:
         async with session.get(url) as response:
+            print(url)
             return await response.json(content_type=None)
     except Exception as ex:
         return {"error": f"{url} failed rdap lookup", "exception": str(ex)}
 
 async def main():
+    cached_rdaps = []
+    for obj in list_rdap():
+        cached_rdaps.append(obj.object_name.split('/')[1])
     urls = grab_inside()
+    print(len(urls))
+
+    for i in cached_rdaps:
+        try:
+            urls.remove(i)
+        except ValueError:
+            pass
+
+    print(len(urls))
     tasks = []
-    conn = aiohttp.TCPConnector(limit=30)
+    conn = aiohttp.TCPConnector(limit_per_host=10)
     async with aiohttp.ClientSession(connector=conn) as session:
         for url in urls:
             try: res = get_tld(url, as_object=True, fix_protocol=True)
