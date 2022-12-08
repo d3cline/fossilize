@@ -16,5 +16,5 @@ def put_object(path, data):
 
 def list_rdap():
     cached_rdaps = []
-    for obj in client.list_objects("fossilize", prefix="rdap/"): cached_rdaps.append(obj.object_name.split('/')[1])
+    for obj in client.list_objects("fossilize", prefix="rdap/"): cached_rdaps.append(obj.object_name.split('/')[1].encode().decode("idna"))
     return cached_rdaps
