@@ -17,23 +17,21 @@ async def main():
     server_list = grab_inside()
     remove_list = list_rdap()
     fld_list = []
-
     for domain in server_list:
         try:  fld_list.append(get_tld(domain, as_object=True, fix_protocol=True).fld.encode().decode("idna"))
         except: print( {"error": f"{domain} failed tld lookup"} )
-
     for i in remove_list:
         try:
             fld_list.remove(i)
         except ValueError:
             pass
-
+    fld_list = set(fld_list)
+    print(fld_list)
     tasks = []
     conn = aiohttp.TCPConnector(limit_per_host=10)
     async with aiohttp.ClientSession(connector=conn) as session:
         for domain in fld_list:
             tasks.append(fetch(session, f'https://www.rdap.net/domain/{domain}'))
-
         bodies = await asyncio.gather(*tasks)
         for body in bodies:
             if body and "ldhName" in body.keys():
