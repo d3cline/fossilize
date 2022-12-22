@@ -1,4 +1,4 @@
-import requests 
+import httpx
 
 # Your home instance URL
 INSTANCE_URL="https://opalstack.social"
@@ -7,20 +7,19 @@ TOTAL_CANT = 0
 TOTAL_CAN = 0
 
 def grab_instance_domains():
-  return requests.get(url=f'{INSTANCE_URL}/api/v1/instance/peers').json()
+  return httpx.get(url=f'{INSTANCE_URL}/api/v1/instance/peers').json()
 
 def spider(domains):
   for domain in domains:
-    try: r = requests.get(url=f'https://{domain}/api/v1/instance/peers', timeout=3).json()
+    try: r = httpx.get(url=f'https://{domain}/api/v1/instance/peers', timeout=3).json()
     except Exception as ex: 
       #print(f'domain {domain} faild request lookup {ex}')
       pass
 
-    try: i = requests.get(url=f'https://{domain}/api/v2/instance', timeout=3).json()
+    try: i = httpx.get(url=f'https://{domain}/api/v2/instance', timeout=3).json()
     except Exception as ex: 
       #print(f'domain {domain} faild request lookup {ex}')
       pass
-
 
     try:
       if 'opalstack.social' in r:
