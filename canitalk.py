@@ -16,7 +16,8 @@ def spider(domains):
       #print(f'domain {domain} faild request lookup {ex}')
       pass
 
-    try: i = httpx.get(url=f'https://{domain}/api/v2/instance', timeout=3).json()
+    try: 
+      i = httpx.get(url=f'https://{domain}/api/v2/instance', timeout=3).json()
     except Exception as ex: 
       #print(f'domain {domain} faild request lookup {ex}')
       pass
