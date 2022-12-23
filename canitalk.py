@@ -24,7 +24,7 @@ def spider(domains):
 
     try:
       if 'opalstack.social' in r:
-        print(f"✅ is present on {domain} Users: {i['usage']['users']['active_month']}")
+        print(f"✅ is present on {domain} Users: {}")
         TOTAL_CAN = TOTAL_CAN + i['usage']['users']['active_month']
       else:
         print(f"❌ is not present on {domain} Users: {i['usage']['users']['active_month']}")
