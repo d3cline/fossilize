@@ -26,6 +26,8 @@ async def grab_instance_info(domains):
   return (infos, errors)
 
 async def grab_instance_peers(domains):
+  global TOTAL_CANT 
+  global TOTAL_CAN
   for domain, v in domains.items():
     users = v['users']
     async with httpx.AsyncClient() as client:
@@ -38,7 +40,7 @@ async def grab_instance_peers(domains):
           print(f"❌ is not present on {domain} Users: {users}")
           TOTAL_CANT+=users
       except Exception as ex:
-        print(domain, r)
+        print(domain, r, ex)
 
 def filter_mastodon_domains(infos):
   mastodon_domains = {}
